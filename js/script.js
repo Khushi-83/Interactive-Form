@@ -70,3 +70,29 @@ totalCost(jsFrameworks)
 totalCost(builTools)
 totalCost(npm)
 totalCost(express)
+
+// payment
+
+const paymentMethod = document.getElementById('payment')
+const creditCard = document.querySelector('[value=credit-card]')
+const paypalBox = document.getElementById('paypal')
+const bitcoinBox = document.getElementById('bitcoin')
+const creditCardBox = document.getElementById('credit-card')
+creditCard.selected = true
+paypalBox.style.display = 'none'
+bitcoinBox.style.display = 'none'
+
+paymentMethod.addEventListener('change', (e) => {
+  const payment = e.target.value
+  if (payment === 'bitcoin') {
+    bitcoinBox.style.display = ''
+    creditCardBox.style.display = 'none'
+    paypalBox.style.display = 'none'
+  } else if (payment === 'paypal') {
+    bitcoinBox.style.display = 'none'
+    creditCardBox.style.display = 'none'
+    paypalBox.style.display = ''
+  } else {
+    creditCardBox.style.display = ''
+  }
+})
