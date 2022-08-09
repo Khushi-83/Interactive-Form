@@ -39,9 +39,34 @@ design.addEventListener('change', (e) => {
   }
 })
 
-// The "Total: $" element updated to reflect the sum of the cost of the user’s selected activities.
-const activities = document.getElementById('activities')
-for (let i = 0; i < activities.length; i++) {
-  const element = activities[i]
-  console.log(element)
+// The "Total: $" element updates to reflect the sum of the cost of the user’s selected activities.
+const mainConference = document.querySelector('input[name=all]')
+const jsLibraries = document.querySelector('input[name=js-libs]')
+const nodeJS = document.querySelector('input[name=node]')
+const jsFrameworks = document.querySelector('input[name=js-frameworks]')
+const builTools = document.querySelector('input[name=build-tools]')
+const npm = document.querySelector('input[name=npm]')
+const express = document.querySelector('input[name=express]')
+const total = document.getElementById('activities-cost')
+let cost = 0
+
+// Function to grab the courses value and add to the total
+function totalCost (course) {
+  const price = parseInt(course.dataset.cost)
+  course.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      total.textContent = `Total: $${cost += price}`
+    } else {
+      cost = cost - price
+      total.textContent = `Total: $${cost}`
+    }
+  })
 }
+// calling functions
+totalCost(mainConference)
+totalCost(jsLibraries)
+totalCost(nodeJS)
+totalCost(jsFrameworks)
+totalCost(builTools)
+totalCost(npm)
+totalCost(express)
