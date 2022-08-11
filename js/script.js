@@ -96,3 +96,15 @@ paymentMethod.addEventListener('change', (e) => {
     creditCardBox.style.display = ''
   }
 })
+
+// Form validation
+
+const usernameInput = document.getElementById('name')
+const emailInput = document.getElementById('email')
+const activities = document.getElementById('activities')
+const cardNumber = document.getElementById('cc-num')
+const zipCode = document.getElementById('zip')
+const cvv = document.getElementById('cvv')
+const form = document.getElementsByTagName('form')
+
+form.addEventListener('submit', )
