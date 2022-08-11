@@ -1,7 +1,7 @@
 
 // focus the input for name when first load the page
-const name = document.getElementById('name')
-name.focus()
+const userName = document.getElementById('name')
+userName.focus()
 
 // other job role field visible only when other job role is selected
 const otherJob = document.getElementById('other-job-role')
@@ -40,6 +40,7 @@ design.addEventListener('change', (e) => {
 })
 
 // The "Total: $" element updates to reflect the sum of the cost of the user’s selected activities.
+const activitiesField = document.getElementById('activities');
 const mainConference = document.querySelector('input[name=all]')
 const jsLibraries = document.querySelector('input[name=js-libs]')
 const nodeJS = document.querySelector('input[name=node]')
@@ -48,6 +49,7 @@ const builTools = document.querySelector('input[name=build-tools]')
 const npm = document.querySelector('input[name=npm]')
 const express = document.querySelector('input[name=express]')
 const total = document.getElementById('activities-cost')
+
 let cost = 0
 
 // Function to grab the courses value and add to the total
@@ -98,13 +100,118 @@ paymentMethod.addEventListener('change', (e) => {
 })
 
 // Form validation
+const email = document.getElementById('email')
+const form = document.querySelector('form')
 
-const usernameInput = document.getElementById('name')
-const emailInput = document.getElementById('email')
-const activities = document.getElementById('activities')
-const cardNumber = document.getElementById('cc-num')
-const zipCode = document.getElementById('zip')
-const cvv = document.getElementById('cvv')
-const form = document.getElementsByTagName('form')
+const nameValidator = () => {
+  const nameValue = userName.value
+  const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue)
+  return nameIsValid
+}
 
-form.addEventListener('submit', )
+const emailValidator = () => {
+  const emailValue = email.value
+  const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue)
+  return emailIsValid
+}
+
+const activitiesValidator = () => {
+  const activitiesSectionIsValid = totalSelected > 0
+  return activitiesSectionIsValid
+}
+
+const cardValidator = () => {
+  const cardNumber = document.getElementById('cc-num').value
+  const cardIsValid = /^\d{13,16}$/.test(cardNumber)
+  return cardIsValid
+}
+
+const zipValidator = () => {
+  const zip = document.getElementById('zip').value
+  const zipIsValid = /^\d{5}$/.test(zip)
+  return zipIsValid
+}
+
+const cvvValidator = () => {
+  const cvv = document.getElementById('cvv').value
+  const cvvIsValid = /^\d{3}$/.test(cvv)
+  return cvvIsValid
+}
+
+const nameField = userName.parentElement
+const emailField = email.parentElement
+const cardField = document.getElementById('cc-num').parentElement
+const zipField = document.getElementById('zip').parentElement
+const cvvField = document.getElementById('cvv').parentElement
+
+function notValid (field) {
+  field.classList.add('not-valid')
+  field.classList.remove('valid')
+  field.lastElementChild.style.display = 'block'
+}
+
+function valid (field) {
+  field.classList.add('valid')
+  field.classList.remove('not-valid')
+  field.lastElementChild.removeAttribute('style')
+}
+
+userName.addEventListener('keyup', e => {
+  const nameHint = document.getElementById('name-hint')
+
+  if (!nameValidator() && userName.value.length === 0) {
+    nameHint.innerHTML = 'Name field cannot be blank'
+    notValid(nameField)
+  } else if (!nameValidator() && userName.value.length > 0) {
+    nameHint.innerHTML = 'Name field can only include alphabetical characters'
+    notValid(nameField)
+  } else if (nameValidator()) {
+    valid(nameField)
+  }
+})
+
+form.addEventListener('submit', e => {
+  if (!nameValidator()) {
+    notValid(nameField)
+    e.preventDefault()
+  } else if (nameValidator()) {
+    valid(nameField)
+  }
+
+  if (!emailValidator()) {
+    notValid(emailField)
+    e.preventDefault()
+  } else if (emailValidator()) {
+    valid(emailField)
+  }
+
+  if (!activitiesValidator()) {
+    notValid(activitiesField)
+    e.preventDefault()
+  } else if (activitiesValidator()) {
+    valid(activitiesField)
+  }
+
+  if (payment.selectedIndex === 1) {
+    if (!cardValidator()) {
+      notValid(cardField)
+      e.preventDefault()
+    } else if (cardValidator()) {
+      valid(cardField)
+    }
+
+    if (!zipValidator()) {
+      notValid(zipField)
+      e.preventDefault()
+    } else if (zipValidator()) {
+      valid(zipField)
+    }
+
+    if (!cvvValidator()) {
+      notValid(cvvField)
+      e.preventDefault()
+    } else if (cvvValidator()) {
+      valid(cvvField)
+    }
+  }
+})
