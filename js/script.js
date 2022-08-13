@@ -40,17 +40,18 @@ design.addEventListener('change', (e) => {
 })
 
 // The "Total: $" element updates to reflect the sum of the cost of the user’s selected activities.
-const activitiesField = document.getElementById('activities');
+const activitiesField = document.getElementById('activities')
 const mainConference = document.querySelector('input[name=all]')
 const jsLibraries = document.querySelector('input[name=js-libs]')
 const nodeJS = document.querySelector('input[name=node]')
 const jsFrameworks = document.querySelector('input[name=js-frameworks]')
-const builTools = document.querySelector('input[name=build-tools]')
+const buildTools = document.querySelector('input[name=build-tools]')
 const npm = document.querySelector('input[name=npm]')
 const express = document.querySelector('input[name=express]')
 const total = document.getElementById('activities-cost')
 
 let cost = 0
+let selected = 0
 
 // Function to grab the courses value and add to the total
 function totalCost (course) {
@@ -59,17 +60,35 @@ function totalCost (course) {
     if (e.target.checked) {
       total.textContent = `Total: $${cost += price}`
     } else {
-      cost = cost - price
+      cost -= price
       total.textContent = `Total: $${cost}`
     }
   })
 }
+function totalSelected (course) {
+  course.addEventListener('change', () => {
+    if (course.checked) {
+      selected += 1
+    } else {
+      selected -= 1
+    }
+    console.log(selected)
+  })
+}
+totalSelected(mainConference)
+totalSelected(jsLibraries)
+totalSelected(nodeJS)
+totalSelected(jsFrameworks)
+totalSelected(buildTools)
+totalSelected(npm)
+totalSelected(express)
+
 // calling functions
 totalCost(mainConference)
 totalCost(jsLibraries)
 totalCost(nodeJS)
 totalCost(jsFrameworks)
-totalCost(builTools)
+totalCost(buildTools)
 totalCost(npm)
 totalCost(express)
 
@@ -116,7 +135,7 @@ const emailValidator = () => {
 }
 
 const activitiesValidator = () => {
-  const activitiesSectionIsValid = totalSelected > 0
+  const activitiesSectionIsValid = selected > 0
   return activitiesSectionIsValid
 }
 
@@ -192,7 +211,7 @@ form.addEventListener('submit', e => {
     valid(activitiesField)
   }
 
-  if (payment.selectedIndex === 1) {
+  if (paymentMethod.selectedIndex === 1) {
     if (!cardValidator()) {
       notValid(cardField)
       e.preventDefault()
