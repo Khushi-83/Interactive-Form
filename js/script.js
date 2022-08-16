@@ -92,6 +92,52 @@ totalCost(buildTools)
 totalCost(npm)
 totalCost(express)
 
+// Making the focus states of the activities more obvious to all users
+
+mainConference.onfocus = function () {
+  mainConference.parentElement.className = 'focus'
+}
+jsLibraries.onfocus = function () {
+  jsLibraries.parentElement.className = 'focus'
+}
+nodeJS.onfocus = function () {
+  nodeJS.parentElement.className = 'focus'
+}
+jsFrameworks.onfocus = function () {
+  jsFrameworks.parentElement.className = 'focus'
+}
+buildTools.onfocus = function () {
+  buildTools.parentElement.className = 'focus'
+}
+npm.onfocus = function () {
+  npm.parentElement.className = 'focus'
+}
+express.onfocus = function () {
+  express.parentElement.className = 'focus'
+}
+
+mainConference.onblur = function () {
+  mainConference.parentElement.classList.remove('focus')
+}
+jsLibraries.onblur = function () {
+  jsLibraries.parentElement.classList.remove('focus')
+}
+nodeJS.onblur = function () {
+  nodeJS.parentElement.classList.remove('focus')
+}
+jsFrameworks.onblur = function () {
+  jsFrameworks.parentElement.classList.remove('focus')
+}
+buildTools.onblur = function () {
+  buildTools.parentElement.classList.remove('focus')
+}
+npm.onblur = function () {
+  npm.parentElement.classList.remove('focus')
+}
+express.onblur = function () {
+  express.parentElement.classList.remove('focus')
+}
+
 // payment
 
 const paymentMethod = document.getElementById('payment')
@@ -234,3 +280,5 @@ form.addEventListener('submit', e => {
     }
   }
 })
+
+// focus events on activities section
