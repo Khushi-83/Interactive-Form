@@ -6,7 +6,27 @@
   </a>
 </p>
 
->  registration form for a fictional Full Stack conference.
+>  This projects is a registration form for a fictional Full Stack Conference:
+
+> I've implemented with jS:
+
+> Focus the input for name when first load the page;
+
+> Other job role field visible only when other job role is selected;
+
+> T-shirt color option need to match the design the user has chosen;
+
+> A loop to check for scheduling conflicts, the final condition makes the "Total: $" element updates to reflect the sum of the cost of the user’s selected activities;
+
+> Focus states of the activities;
+
+> Show only the payment method selected;
+
+> Form validation;
+
+> REAL-TIME ERROR MESSAGE (Lines 235-248) If a user enters an invalid name into the name field, an error message will appear in real time to alert them that the field only accepts alphabetical characters.
+
+> CONDITIONAL ERROR MESSAGE (Lines 235-248) The name field will be considered invalid if (1) the user attempts to submit the form when there is no text content or (2) the user attempts to submit the form with errors in the name field. When this happens, an error message will be displayed based on which reason the name field was considered invalid.
 
 ## Author
 

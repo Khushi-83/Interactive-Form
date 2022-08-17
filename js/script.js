@@ -93,7 +93,7 @@ for (let i = 0; i < checkboxes.length; i++) {
     e.target.parentElement.classList.remove('focus')
   })
 }
-// payment
+// Show only the payment method selected
 
 const paymentMethod = document.getElementById('payment')
 const creditCard = document.querySelector('[value=credit-card]')
