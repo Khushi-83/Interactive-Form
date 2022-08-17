@@ -39,105 +39,60 @@ design.addEventListener('change', (e) => {
   }
 })
 
-// The "Total: $" element updates to reflect the sum of the cost of the user’s selected activities.
+// The loop checks for scheduling conflicts, the final condition makes the "Total: $" element updates to reflect the sum of the cost of the user’s selected activities.
 const activitiesField = document.getElementById('activities')
-const mainConference = document.querySelector('input[name=all]')
-const jsLibraries = document.querySelector('input[name=js-libs]')
-const nodeJS = document.querySelector('input[name=node]')
-const jsFrameworks = document.querySelector('input[name=js-frameworks]')
-const buildTools = document.querySelector('input[name=build-tools]')
-const npm = document.querySelector('input[name=npm]')
-const express = document.querySelector('input[name=express]')
-const total = document.getElementById('activities-cost')
+let totalCost = 0
+let totalSelected = 0
 
-let cost = 0
-let selected = 0
+activitiesField.addEventListener('change', e => {
+  const selected = e.target
+  const selectedTime = e.target.getAttribute('data-day-and-time')
+  const selectedCost = parseInt(selected.getAttribute('data-cost'))
+  const totalDisplay = document.getElementById('activities-cost')
 
-// Function to grab the courses value and add to the total
-function totalCost (course) {
-  const price = parseInt(course.dataset.cost)
-  course.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      total.textContent = `Total: $${cost += price}`
-    } else {
-      cost -= price
-      total.textContent = `Total: $${cost}`
+  for (let i = 0; i < checkboxes.length; i++) {
+    const otherActivity = checkboxes[i]
+    const otherActivityField = otherActivity.parentElement.classList
+    const otherActivityTime = otherActivity.getAttribute('data-day-and-time')
+
+    if (selected.checked === true &&
+            selected !== otherActivity &&
+            selectedTime === otherActivityTime) {
+      otherActivity.disabled = true
+      otherActivityField.add('disabled')
+    } else if (selected.checked === false &&
+            selected !== otherActivity &&
+            selectedTime === otherActivityTime) {
+      otherActivity.disabled = false
+      otherActivityField.remove('disabled')
     }
-  })
-}
-function totalSelected (course) {
-  course.addEventListener('change', () => {
-    if (course.checked) {
-      selected += 1
-    } else {
-      selected -= 1
-    }
-    console.log(selected)
-  })
-}
-totalSelected(mainConference)
-totalSelected(jsLibraries)
-totalSelected(nodeJS)
-totalSelected(jsFrameworks)
-totalSelected(buildTools)
-totalSelected(npm)
-totalSelected(express)
+  }
 
-// calling functions
-totalCost(mainConference)
-totalCost(jsLibraries)
-totalCost(nodeJS)
-totalCost(jsFrameworks)
-totalCost(buildTools)
-totalCost(npm)
-totalCost(express)
+  if (selected.checked) {
+    totalCost += selectedCost
+    totalSelected += 1
+  } else {
+    totalCost -= selectedCost
+    totalSelected -= 1
+  }
+
+  totalDisplay.textContent = `Total: $${totalCost}`
+})
 
 // Making the focus states of the activities more obvious to all users
+const email = document.getElementById('email')
+const form = document.querySelector('form')
+const checkboxes = form.querySelectorAll('input[type="checkbox"]')
 
-mainConference.onfocus = function () {
-  mainConference.parentElement.className = 'focus'
-}
-jsLibraries.onfocus = function () {
-  jsLibraries.parentElement.className = 'focus'
-}
-nodeJS.onfocus = function () {
-  nodeJS.parentElement.className = 'focus'
-}
-jsFrameworks.onfocus = function () {
-  jsFrameworks.parentElement.className = 'focus'
-}
-buildTools.onfocus = function () {
-  buildTools.parentElement.className = 'focus'
-}
-npm.onfocus = function () {
-  npm.parentElement.className = 'focus'
-}
-express.onfocus = function () {
-  express.parentElement.className = 'focus'
-}
+for (let i = 0; i < checkboxes.length; i++) {
+  checkboxes[i].addEventListener('focus', e => {
+    e.target.parentElement.classList.add('focus')
+  })
 
-mainConference.onblur = function () {
-  mainConference.parentElement.classList.remove('focus')
+  checkboxes[i].addEventListener('blur', e => {
+    e.target.parentElement.classList.remove('focus')
+  })
 }
-jsLibraries.onblur = function () {
-  jsLibraries.parentElement.classList.remove('focus')
-}
-nodeJS.onblur = function () {
-  nodeJS.parentElement.classList.remove('focus')
-}
-jsFrameworks.onblur = function () {
-  jsFrameworks.parentElement.classList.remove('focus')
-}
-buildTools.onblur = function () {
-  buildTools.parentElement.classList.remove('focus')
-}
-npm.onblur = function () {
-  npm.parentElement.classList.remove('focus')
-}
-express.onblur = function () {
-  express.parentElement.classList.remove('focus')
-}
-
 // payment
 
 const paymentMethod = document.getElementById('payment')
@@ -165,9 +120,6 @@ paymentMethod.addEventListener('change', (e) => {
 })
 
 // Form validation
-const email = document.getElementById('email')
-const form = document.querySelector('form')
-
 const nameValidator = () => {
   const nameValue = userName.value
   const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue)
@@ -181,7 +133,7 @@ const emailValidator = () => {
 }
 
 const activitiesValidator = () => {
-  const activitiesSectionIsValid = selected > 0
+  const activitiesSectionIsValid = totalSelected > 0
   return activitiesSectionIsValid
 }
 
@@ -274,11 +226,10 @@ form.addEventListener('submit', e => {
 
     if (!cvvValidator()) {
       notValid(cvvField)
+
       e.preventDefault()
     } else if (cvvValidator()) {
       valid(cvvField)
     }
   }
 })
-
-// focus events on activities section
