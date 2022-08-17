@@ -18,8 +18,10 @@ jobTitle.addEventListener('change', (e) => {
 // t-shirt color option need to match the design the user has chosen
 const design = document.getElementById('design')
 const color = document.getElementById('color')
+color.disabled = true
 design.addEventListener('change', (e) => {
   const design = e.target.value
+  color.disabled = false
   if (design === 'js puns') {
     color.option = 'Select a design theme above'
     color[1].disabled = false
