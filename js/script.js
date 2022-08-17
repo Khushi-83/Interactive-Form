@@ -22,22 +22,21 @@ color.disabled = true
 design.addEventListener('change', (e) => {
   const design = e.target.value
   color.disabled = false
+  color.value = 'Select a design theme above'
   if (design === 'js puns') {
-    color.option = 'Select a design theme above'
-    color[1].disabled = false
-    color[2].disabled = false
-    color[3].disabled = false
-    color[4].disabled = true
-    color[5].disabled = true
-    color[6].disabled = true
+    color[1].hidden = false
+    color[2].hidden = false
+    color[3].hidden = false
+    color[4].hidden = true
+    color[5].hidden = true
+    color[6].hidden = true
   } else {
-    color.value = 'Select a design theme above'
-    color[1].disabled = true
-    color[2].disabled = true
-    color[3].disabled = true
-    color[4].disabled = false
-    color[5].disabled = false
-    color[6].disabled = false
+    color[1].hidden = true
+    color[2].hidden = true
+    color[3].hidden = true
+    color[4].hidden = false
+    color[5].hidden = false
+    color[6].hidden = false
   }
 })
 
